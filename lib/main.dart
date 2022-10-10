@@ -1,30 +1,42 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:hello_world_mpp/day14/counter_notifier.dart';
 import 'package:hello_world_mpp/day5/latihan.dart';
 import 'package:hello_world_mpp/day5/row_column_widget_playground.dart';
 import 'package:hello_world_mpp/day6/latihan.dart';
 import 'package:hello_world_mpp/day7/day7latihan.dart';
+import 'package:provider/provider.dart';
 
 import 'day12/page_1.dart';
+import 'day14/home_provider.dart';
 import 'day6/latihan_assets.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CounterNotifier()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Flutter Hello World Mpp',
+      key: navigatorKey,
       theme: ThemeData(
 
         primarySwatch: Colors.yellow,
       ),
-      home: const Page1(),
+      home: const MyHomeProvider(title: 'Halo',),
     );
   }
 }
